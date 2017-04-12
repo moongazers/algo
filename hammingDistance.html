@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Hamming Distance</title>
+    </head>
+    <body>
+        <pre>
+        The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
+
+        Given two integers x and y, calculate the Hamming distance.
+
+        Note:
+        0 ≤ x, y < 231.
+
+        Example:
+
+        Input: x = 1, y = 4
+
+        Output: 2
+
+        Explanation:
+        1   (0 0 0 1)
+        4   (0 1 0 0)
+            ↑   ↑
+
+        The above arrows point to positions where the corresponding bits are different.
+        </pre>
+        <script>
+            /**
+             * @param {number} x
+             * @param {number} y
+             * @return {number}
+             */
+            var hammingDistance = function(x, y) {
+                console.log(x.toString(2));
+                console.log(y.toString(2));
+                // XOR operation
+                var result = (x ^ y).toString(2) // same as x.toString(2) ^ y.toString(2)
+                // make it to arr for couting 1's
+                var resultArr = result.toString().split("");
+                var count = 0;
+                for (var i = 0; i < resultArr.length; i++) {
+                    // console.log(typeof resultArr[i]);  => string
+                    // console.log(resultArr[i]);
+                    if (resultArr[i] === "1") {
+                        count++;
+                    }
+                }
+
+                return count;
+            };
+
+            var result = hammingDistance(1, 4);
+            console.log(result);
+        </script>
+    </body>
+</html>
