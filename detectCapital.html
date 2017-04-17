@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Detect Capital</title>
+    </head>
+    <body>
+        <pre>
+            Given a word, you need to judge whether the usage of capitals in it is right or not.
+
+            We define the usage of capitals in a word to be right when one of the following cases holds:
+
+            All letters in this word are capitals, like "USA".
+            All letters in this word are not capitals, like "leetcode".
+            Only the first letter in this word is capital if it has more than one letter, like "Google".
+            Otherwise, we define that this word doesn't use capitals in a right way.
+            Example 1:
+            Input: "USA"
+            Output: True
+            Example 2:
+            Input: "FlaG"
+            Output: False
+            Note: The input will be a non-empty word consisting of uppercase and lowercase latin letters.
+
+        </pre>
+        <script>
+            /**
+            * @param {string} word
+            * @return {boolean}
+            */
+            var detectCapitalUse = function(word) {
+                var arr = word.split(""), i;
+                if (word.toUpperCase() === word || word.toLowerCase() === word) {
+                    return true;
+                } else { // case #3 OR false string
+                    // array faster? string faster?
+                    // 1. array
+                    // var firstLetter = arr[0], curLetter;
+                    // if (firstLetter === firstLetter.toUpperCase()) {
+                    //     var arrLen = arr.length;
+                    //     for (i = 1; i < arrLen; i++) {
+                    //         curLetter = arr[i];
+                    //         if (curLetter === curLetter.toUpperCase()) {
+                    //             break;
+                    //         }
+                    //         if (i === arrLen - 1) { // end state
+                    //             return true;
+                    //         }
+                    //     }
+                    // }
+                    // return false;
+                    // 2. string
+                    var firstLetter = word.charAt(0), curLetter;
+                    if (firstLetter === firstLetter.toUpperCase()) {
+                        var wordLen = word.length;
+                        for (i = 1; i < wordLen; i++) {
+                            curLetter = word.charAt(i);
+                            if (curLetter === curLetter.toUpperCase()) {
+                                break;
+                            }
+                            if (i === wordLen - 1) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+
+                // looks like in this problem, string is faster . Hai indicated it depends on what problem
+            };
+
+
+            var word = "FlaG";
+            var word = "USA";
+            var word = "Flag";
+            var result = detectCapitalUse(word);
+            console.log(result);
+
+        </script>
+    </body>
+</html>
