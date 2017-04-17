@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Single Number</title>
+    </head>
+    <body>
+        <pre>
+        Given an array of integers, every element appears twice except for one. Find that single one.
+
+        Note:
+        Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums
+            * @return {number}
+            */
+            var singleNumber = function(nums) {
+                //known that A XOR A = 0 and the XOR operator is COMMUTATIVE(position interchangably)
+                var i, result;
+                for (i = 0; i < nums.length; i++) {
+                    result ^= nums[i];
+                }
+                return result;
+            };
+            var result = singleNumber([1,3,2,4,3,4,1]);
+            console.log(result);
+        </script>
+    </body>
+</html>

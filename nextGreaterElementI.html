@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Next Greater Element I</title>
+    </head>
+    <body>
+        <pre>
+            You are given two arrays (without duplicates) nums1 and nums2 where nums1’s elements are subset of nums2. Find all the next greater numbers for nums1's elements in the corresponding places of nums2.
+
+            The Next Greater Number of a number x in nums1 is the first greater number to its right in nums2. If it does not exist, output -1 for this number.
+
+            Example 1:
+            Input: nums1 = [4,1,2], nums2 = [1,3,4,2].
+            Output: [-1,3,-1]
+            Explanation:
+                For number 4 in the first array, you cannot find the next greater number for it in the second array, so output -1.
+                For number 1 in the first array, the next greater number for it in the second array is 3.
+                For number 2 in the first array, there is no next greater number for it in the second array, so output -1.
+            Example 2:
+            Input: nums1 = [2,4], nums2 = [1,2,3,4].
+            Output: [3,-1]
+            Explanation:
+                For number 2 in the first array, the next greater number for it in the second array is 3.
+                For number 4 in the first array, there is no next greater number for it in the second array, so output -1.
+            Note:
+            All elements in nums1 and nums2 are unique.
+            The length of both nums1 and nums2 would not exceed 1000.
+        </pre>
+        <script>
+            /**
+            * @param {number[]} findNums
+            * @param {number[]} nums
+            * @return {number[]}
+            */
+            var nextGreaterElement = function(findNums, nums) {
+                // 1. The Next Greater Number of a number x in nums1 is the first greater number to its right in nums2
+                // 2. nums1’s elements are subset of nums2
+                // it means that for the num in nums 1 , there must be that num in nums2 as well;
+                // and for that num(let's name it A) in nums2, if there exists that the num(name it B) to A's right(NOT NECESSARILY NEIGHBOR) is greater than A, output B; otherwise -1;
+
+                // var i, j;
+                // var result = [];
+                // for (i = 0; i < findNums.length; i++) {
+                //     for (j = 0; j < nums.length; j++) {
+                //         // first find the original number
+                //         if (findNums[i] === nums[j]) {
+                //             // you find it , set sth to mark it as found
+                //             result[i] = -1;  // this is delicate... it's for [i] , and if u cannot find it, the result is also right
+                //         } // no else, since subset
+                //         if (result[i] === -1 && nums[j] > findNums[i]) { // if the orig num is found, and graeter num to its right is found
+                //             result[i] = nums[j];
+                //         }
+                //     }
+                // }
+
+                // return result;
+
+                // A bit improvement :  find the index first, then loop the righter elems
+                // intuitive:  if input size is big, it takes longer to loop one by one to find the orig elem than find the index first: indexOf()
+                var i, index, j;
+                var result = [];
+                for (i = 0; i < findNums.length; i++) {
+                    index = nums.indexOf(findNums[i]);
+                    if (index === nums.length - 1) {
+                        result.push(-1);
+                    } else {
+                        for (j = index+1; j < nums.length ; j++) {
+                            if (nums[j] > findNums[i]) {
+                                result.push(nums[j]);
+                                break;
+                            } 
+                            if (j === nums.length - 1) {
+                                result.push(-1);
+                            }
+                        }
+                    }
+                }
+
+                return result;
+
+            };
+            var result = nextGreaterElement([4,1,2], [1,3,4,2,5]);
+            console.log(result);
+        </script>
+    </body>
+</html>

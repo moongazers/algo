@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Keyboard Row</title>
+    </head>
+    <body>
+        <pre>
+        Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
+        <br>
+        <img src="resource/keyboard.png"></img>
+        Example 1:
+        Input: ["Hello", "Alaska", "Dad", "Peace"]
+        Output: ["Alaska", "Dad"]
+        Note:
+        You may use one character in the keyboard more than once.
+        You may assume the input string will only contain letters of alphabet.
+        </pre>
+        <script>
+            /**
+            * @param {string[]} words
+            * @return {string[]}
+            */
+            var findWords = function(words) {
+                // three strings, check one by one?
+                // The result should keep upper/lower case
+                // var str1 = "QWERTYUIOP";
+                // var str2 = "ASDFGHJKL";
+                // var str3 = "ZXCVBNM";
+
+                // var i, curArr, j, arrFrom;
+                // var result = [];
+                // for (i = 0; i < words.length; i++) {
+                //     curArr = words[i].split("");
+                //     // loop current arr
+                //     for (j = 0; j < curArr.length; j++) {
+
+                //         if (arrFrom) { // when j >= 1
+                //             if (arrFrom.indexOf(curArr[j].toUpperCase()) === -1) { // compare in same case
+                //                 arrFrom = ""; // don't forget to clear 
+                //                 break;
+                //             }
+                //         }
+
+                //         if (j === 0) { // initialization, j = 0
+                //             if (str1.indexOf(curArr[0].toUpperCase()) !== -1) {
+                //                 arrFrom = str1;
+                //             } else if (str2.indexOf(curArr[0].toUpperCase()) !== -1 ) {
+                //                 arrFrom = str2;
+                //             } else if (str3.indexOf(curArr[0].toUpperCase()) !== -1) {
+                //                 arrFrom = str3;
+                //             }
+                //         }
+
+                //         if (j === curArr.length - 1) { // end state, mean the word pass
+                //             result.push(curArr.join(""));
+                //             arrFrom = ""; // don't forget to clear 
+                //         }
+                        
+                //     }
+                // }
+                // return result;
+
+                // 2--------------------------------
+                //use map to see if it's faster
+                var map = {
+                    Q:1,
+                    W:1,
+                    E:1,
+                    R:1,
+                    T:1,
+                    Y:1,
+                    U:1,
+                    I:1,
+                    O:1,
+                    P:1,
+                    A:2,
+                    S:2,
+                    D:2,
+                    F:2,
+                    G:2,
+                    H:2,
+                    J:2,
+                    K:2,
+                    L:2,
+                    Z:3,
+                    X:3,
+                    C:3,
+                    V:3,
+                    B:3,
+                    N:3,
+                    M:3
+                };
+
+                var i, curArr, j, arrFrom;
+                var result = [];
+                for (i = 0; i < words.length; i++) {
+                    curArr = words[i].split("");
+                    for (j = 0; j < curArr.length; j++) {
+                        // j > 0
+                        if (arrFrom) {
+                            if (map[curArr[j].toUpperCase()] !== arrFrom) {
+                                arrFrom = "";
+                                break;
+                            }
+                        }
+                        //initial case
+                        if (j === 0) {
+                            arrFrom = map[curArr[j].toUpperCase()];
+                        }
+                        // end case, means the word meet requirement
+                        if (j === curArr.length - 1) {
+                            result.push(words[i]);
+                            arrFrom = "";
+                        }
+                    }
+                }
+                return result;
+
+                // the result looks to be pretty much same... no significant diff... it may be resulted by no map impl in js...
+                // it's implied by Hai that map is faster than string if it requires frequent load...
+            };
+
+            var result = findWords(["Hello", "Alaska", "Dad", "Peace"]);
+            console.log(result);
+        </script>
+    </body>
+</html>

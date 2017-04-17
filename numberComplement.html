@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Number Complement</title>
+    </head>
+    <body>
+        <pre>
+        Given a positive integer, output its complement number. The complement strategy is to flip the bits of its binary representation.
+
+        Note:
+        The given integer is guaranteed to fit within the range of a 32-bit signed integer.
+        You could assume no leading zero bit in the integer’s binary representation.
+        Example 1:
+        Input: 5
+        Output: 2
+        Explanation: The binary representation of 5 is 101 (no leading zero bits), and its complement is 010. So you need to output 2.
+        Example 2:
+        Input: 1
+        Output: 0
+        Explanation: The binary representation of 1 is 1 (no leading zero bits), and its complement is 0. So you need to output 0.
+
+        </pre>
+        <script>
+            /**
+             * @param {number} num
+             * @return {number}
+             */
+            var findComplement = function(num) {
+                //bit operation: NOT ~ ,  64-bit unsigned , seems not accurate
+                var binaryNum = num.toString(2);
+                console.log(binaryNum);
+                // manually complement the number;
+                var binArr = binaryNum.split(""); 
+                var i;
+                for (i = 0; i < binArr.length; i++) {
+                    if (binArr[i] === "1") {
+                        binArr[i] = "0";
+                    } else if (binArr[i] === "0") {
+                        binArr[i] = "1";
+                    }
+                }
+                // how can u convert a string to number while keeping base 2?  => parseInt(string, radix)
+                // MISTAKE: (010).toString(2)   => THIS WOULD RESULT IN "1000"
+                // parseInt("101", 10)
+                // 101
+                // parseInt("101", 2)
+                // 5
+                return parseInt(binArr.join(""), 2);
+            };
+
+            var result = findComplement(5);
+            var result = findComplement(1);
+            console.log(result);
+        </script>
+    </body>
+</html>
