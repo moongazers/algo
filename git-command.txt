@@ -1,0 +1,15 @@
+echo "# handlebar" >> README.md
+git init
+git add README.md  => git add -A, etc, check your self
+git commit -m "first commit"
+git remote add origin https://github.com/moongazers/handlebar.git
+git push -u origin master
+
+----------------------------
+git pull 
+git push
+
+create new branch:  git checkout -b [name_of_your_new_branch]
+
+unstage:  git reset HEAD
+
