@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Move Zeroes</title>
+    </head>
+    <body>
+        <pre>
+            Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+            For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
+
+            Note:
+            You must do this in-place without making a copy of the array.
+            Minimize the total number of operations.
+
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums
+            * @return {void} Do not return anything, modify nums in-place instead.
+            */
+            var moveZeroes = function(nums) {
+                // in-place ; maintain the relative order of the non-zero elements
+                // move all the non-zero elems advance
+                // somewhat similar to quicksort - PARTITION step  
+
+                var i, save;
+                var j = 0; // => the index to record the leftmost 0 position, which would be swapped with non-zero elems;
+                for ( i = 0; i < nums.length; i++) {
+                    if (nums[i] !== 0) {
+                        save = nums[j];   //MISTAKE #1: nums[j] not necessarily 0, eg: [1]. still need to save
+                        nums[j++] = nums[i];
+                        nums[i] = save; 
+                    }
+                }
+                // return nums;   // don't return; in place
+
+            };
+
+
+            var nums = [0, 1, 0, 3, 12];
+            var result = moveZeroes(nums);
+            console.log(result);
+
+        </script>
+    </body>
+</html>
