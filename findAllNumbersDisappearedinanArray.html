@@ -43,22 +43,43 @@
                 // return origArr;
 
                 // 2. use the +/- of value to indicate whether a[i] is traversed; if -, it means i is seen.
-                var i, value, result = [];
-                for (i = 0; i < nums.length; i++) {
-                    // this is the traversed value ; "- 1" is necessary since it's [1,n] while the "value" here would be index [0, n-1] in order to mark traversed val
-                    value = Math.abs(nums[i]) - 1; // MISTAKE #1: need abs:  |nums[i]|
-                    if (nums[value] > 0) {
-                        nums[value] = -nums[value];
-                    }
+                // var i, value, result = [];
+                // for (i = 0; i < nums.length; i++) {
+                //     // this is the traversed value ; "- 1" is necessary since it's [1,n] while the "value" here would be index [0, n-1] in order to mark traversed val
+                //     value = Math.abs(nums[i]) - 1; // MISTAKE #1: need abs:  |nums[i]|
+                //     if (nums[value] > 0) {
+                //         nums[value] = -nums[value];
+                //     }
+                // }
+                // // find any val which is not negative
+                // for (i = 0; i < nums.length; i++) {
+                //     if (nums[i] > 0) {
+                //         result.push(i+1);
+                //     }
+                // }
+                // return result;
+                // 3. can it be done using counting sort?
+                // nums[1...n].length = n    0 <= nums[i] <= k (act. [1, n] )  => 
+                var countingArr = []; // length of C is determined by the max number in nums, which is n(size of array)
+                var result = [];
+                var i, cur;
+                // initialize countingArr
+                for (i = 0; i < nums.length; i++) {  // n = size of array = nums.length
+                    countingArr[i] = 0;
                 }
-                // find any val which is not negative
+                // counting
                 for (i = 0; i < nums.length; i++) {
-                    if (nums[i] > 0) {
+                    countingArr[nums[i] - 1] += 1;  // nums[i] => value of nums ; nums[i] - 1 => nums[i] can be equal to nums.length, but countingArr => [0, nums.length -1]
+                }
+                console.log(countingArr);
+                // dont need Line 7 after.. just counting, no sort :)
+                for (i = 0; i < countingArr.length; i++) {
+                    cur = countingArr[i];
+                    if (cur === 0) {
                         result.push(i+1);
                     }
                 }
                 return result;
-                // 3. can it be done using counting sort?
             };
 
             var result = findDisappearedNumbers([4,3,2,7,8,2,3,1]);
