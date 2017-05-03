@@ -24,23 +24,60 @@
              * @return {number}
              */
             var maxDepth = function(root) {
-                var depth = 0;
-                var left = 0;
-                var right = 0;
-                if(root === null){
-                    return 0;
-                } else if(root.left === null && root.right === null){
-                    return 1;
-                } else {
-                    if(root.left !== null){
-                        left = 1 + maxDepth(root.left);
+                console.log(root);
+                // recursive
+                // var depth = 0;
+                // var left = 0;
+                // var right = 0;
+                // if(root === null){
+                //     return 0;
+                // } else if(root.left === null && root.right === null){
+                //     return 1;
+                // } else {
+                //     if(root.left !== null){
+                //         left = 1 + maxDepth(root.left);
+                //     }
+                //     if(root.right !== null){
+                //         right = 1 + maxDepth(root.right);
+                //     }
+                //     depth = (left >= right)? left : right;
+                // }
+                // return depth;
+
+                // recursive 2 (should be DFS)
+                // if (root === null || root === undefined) {
+                //     return 0;
+                // }
+                // return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+
+                // iterative (BFS)
+                // http://stackoverflow.com/questions/1590247/how-do-you-implement-a-stack-and-a-queue-in-javascript 
+                // algo book pdf p616
+                var queue = [];
+                queue.push(root);
+                var cur = {};  // tree node, object
+                var count = 0, size, i;
+                if (root !== null && root !== undefined) {  // when root is null/undefined, return 0
+                    while (queue.length > 0) {
+                        // loop through all adjacent nodes of cur (binary tree, at most 2) --- from book
+                        // let's record the size of queue for now, and after looping through all same-level nodes, count++
+                        // this meets if there is only 1 root node as well
+                        size = queue.length;
+                        for (i = size; i > 0; i--) {
+                            // dequeue, get the head of the node in queue out(FIFO)
+                            cur = queue.shift();
+                            if (cur.left !== null && cur.left !== undefined) {
+                                queue.push(cur.left);
+                            }
+                            if (cur.right !== null && cur.right !== undefined) {
+                                queue.push(cur.right);
+                            }
+                        }
+                        count++;  // same-level nodes all looped, count++
                     }
-                    if(root.right !== null){
-                        right = 1 + maxDepth(root.right);
-                    }
-                    depth = (left >= right)? left : right;
                 }
-                return depth;
+                return count;
+                
             };
 
 
@@ -60,7 +97,7 @@
                         right: null
                     }
                 }
-            }
+            };
             var result = maxDepth(tree);
             console.log(result);
 

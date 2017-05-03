@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Invert Binary Tree</title>
+    </head>
+    <body>
+        <pre>
+            Invert a binary tree.
+
+              4
+            /   \
+           2     7
+          / \   / \
+         1   3 6   9
+            to
+                4
+              /   \
+             7     2
+            / \   / \
+           9   6 3   1
+            Trivia:
+            This problem was inspired by this original tweet by Max Howell:
+            Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.
+
+        </pre>
+        <script>
+            /**
+            * Definition for a binary tree node.
+            * function TreeNode(val) {
+            *     this.val = val;
+            *     this.left = this.right = null;
+            * }
+            */
+            /**
+            * @param {TreeNode} root
+            * @return {TreeNode}
+            */
+            var invertTree = function(root) {
+                // DFS recursive
+                // if(!root){
+                //     return root;
+                // } else{
+                //     if(root.left !== null || root.right !== null){ //dont know what kind of binary tree it is, so allow null node
+                //         var rightNode = root.right;
+                //         var leftNode = root.left;
+
+                //         root.left = rightNode;
+                //         root.right = leftNode;
+                //         //dont use root.left.left , etc.  in conditional, since node can be null, thus "left" undefined
+                //         root.left = invertTree(root.left);
+                //         root.right = invertTree(root.right);
+                //     }
+                //     return root;
+                // }
+
+                // BFS iterative
+                var queue = [];
+                var i, cur, leftNode, rightNode;
+                // do not need size, ie. "size = queue.length; for (i = size; i > 0; i--) { " this time
+                // since you dont need to know when "same-level" travesal is done, not like maximumDepthofBinaryTree
+                queue.push(root);
+                if (root) {  // !root can detect null, undefined ... but not empty obj {}
+                    while (queue.length > 0) {
+                        size = queue.length;
+  
+                        cur = queue.shift();
+                        leftNode = cur.left;
+                        // exchange
+                        cur.left = cur.right;
+                        cur.right = leftNode; 
+                        
+                        if (cur.left) {
+                            queue.push(cur.left);
+                        }
+                        if (cur.right) {
+                            queue.push(cur.right);
+                        }
+                    }
+                }
+                return root;
+            };
+
+
+            var tree = {
+                val: 3,
+                left: {
+                    val: 4,
+                    left: null,
+                    right: null
+                },
+                right: {
+                    val: 5,
+                    left: null,
+                    right: {
+                        val: 6,
+                        left: null,
+                        right: null
+                    }
+                }
+            };
+            var result = invertTree(tree);
+            console.log(result);
+
+        </script>
+    </body>
+</html>
