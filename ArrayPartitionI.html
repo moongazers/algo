@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Array Partition I</title>
+    </head>
+    <body>
+        <pre>
+            Given an array of 2n integers, your task is to group these integers into n pairs of integer, say (a1, b1), (a2, b2), ..., (an, bn) which makes sum of min(ai, bi) for all i from 1 to n as large as possible.
+
+            Example 1:
+            Input: [1,4,3,2]
+
+            Output: 4
+            Explanation: n is 2, and the maximum sum of pairs is 4.
+            Note:
+            n is a positive integer, which is in the range of [1, 10000].
+            All the integers in the array will be in the range of [-10000, 10000].
+
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums
+            * @return {number}
+            */
+            var arrayPairSum = function(nums) {
+                // understanding the prob: https://discuss.leetcode.com/topic/87682/please-explain-the-question-doesn-t-make-sense
+                // get the largest possible sum of MIN of the pair.
+                // eg: [1,2,3,4] => (1,2) and (3,4).  min(1,2) + min(3,4) = 4
+                // so the core is to understand:  why (1,2) and (3,4) would result to best possible sum?
+                // intuitive: to get the best possible sum, need to make the min number in the pair as large as possible.
+                // as proof in https://discuss.leetcode.com/topic/87206/java-solution-sorting-and-rough-proof-of-algorithm/3 ,
+                // cont'd , in order to make |ai - bi| smallest, THEY SHOULD BE ADJACENT
+                // solution: sort, then add 1st, 3rd... elem of the sorted array
+
+                // quick sort 
+                // partition arr first, then quicksort smaller part(from code, recursive, check backwards one by one), then quicksort bigger part(recursive, check forward one by one)
+                var p = 0;  // first index of arr, arr[p...r]
+                var r = nums.length - 1;  // last index of arr, arr[p...r]
+                var i;  // the last index of "smaller part"
+                var pivot, j, save, q;
+                var result = 0;
+
+                var quickSort = function(A, p, r) {
+                    if (p < r) {
+                        q = partition(A, p, r);
+                        // smaller part, and bigger part
+                        quickSort(A, p, q - 1);
+                        quickSort(A, q + 1, r);
+                    }
+                }
+                
+                var partition = function(nums, p, r) {
+                    pivot = nums[r];
+                    i = p - 1;
+                    for (j = p; j < r; j++) {
+                        if (nums[j] <= pivot) {
+                            i++;
+                            // if current elem is smaller than pivot, and there are bigger-than-pivot checked elem(s), switch cur with the first bigger-than-pivot-checked elem
+                            // if not, just switch with itself, so no change
+                            save = nums[j];
+                            nums[j] = nums[i];
+                            nums[i] = save;
+                        }
+                    }
+                    // insert as separator
+                    save = nums[r];
+                    nums[r] = nums[i+1];
+                    nums[i+1] = save;
+
+                    return i+1;
+                }
+
+                // test partition
+                console.log(partition(nums, p, r));
+
+                quickSort(nums, p, r);
+                console.log(nums);
+
+                // add 1st, 3rd elems of array
+                for (i = 0; i < nums.length; i += 2) {
+                    result += nums[i];
+                }
+
+                return result;
+
+            };
+
+
+            var arr = [1,4,3,2];
+            var arr = [2,8,7,1,3,5,6,4];
+            var result = arrayPairSum(arr);
+            console.log(result);
+
+        </script>
+    </body>
+</html>
