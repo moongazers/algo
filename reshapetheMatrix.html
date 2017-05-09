@@ -64,8 +64,8 @@
                 for (i = 0; i < r; i++) {
                     result[i] = [];
                     for (j = 0; j < c; j++) {
-                        // result[i].push(queue.shift());
-                        result[i][j] = queue.shift();   // seems this is faster
+                        result[i].push(queue.shift());  // no big diff in performance
+                        // result[i][j] = queue.shift();  
                     }
                 }
 

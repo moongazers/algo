@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Binary Tree Tilt</title>
+    </head>
+    <body>
+        <pre>
+            Given a binary tree, return the tilt of the whole tree.
+
+            The tilt of a tree node is defined as the absolute difference between the sum of all left subtree node values and the sum of all right subtree node values. Null node has tilt 0.
+
+            The tilt of the whole tree is defined as the sum of all nodes' tilt.
+
+            Example:
+            Input: 
+                    1
+                  /   \
+                 2     3
+            Output: 1
+            Explanation: 
+            Tilt of node 2 : 0
+            Tilt of node 3 : 0
+            Tilt of node 1 : |2-3| = 1
+            Tilt of binary tree : 0 + 0 + 1 = 1
+            Note:
+
+            The sum of node values in any subtree won't exceed the range of 32-bit integer.
+            All the tilt values won't exceed the range of 32-bit integer.
+
+        </pre>
+        <script>
+            /**
+            * Definition for a binary tree node.
+            * function TreeNode(val) {
+            *     this.val = val;
+            *     this.left = this.right = null;
+            * }
+            */
+            /**
+            * @param {TreeNode} root
+            * @return {number}
+            */
+            var findTilt = function(root) {
+                // 3 ways to tree walk: inorder, preorder, postorder (p308)
+                // for this problem, it's better to walk subnodes first then root, so postorder
+                var tilt = 0;
+                // var left, right;  // MISTAKE #1:  DON'T MAKE THE VAR "GLOBAL"! or the value would be overridden during recursion.
+
+                var postOrder = function(node) {
+                    if (node) {
+                        // postOrder: left, right, root
+                        var left = postOrder(node.left);  // VAR here is important... check MISTAKE #1
+                        var right = postOrder(node.right);
+                        tilt += Math.abs(left - right);
+                        
+                        // console.log(node.val);
+                        return node.val + left + right;
+                    } 
+                    return 0;
+                    
+                }
+
+                postOrder(root);
+
+                return tilt;
+            };
+
+            var tree = {
+                val: 3,
+                left: {
+                    val: 2,
+                    left: null,
+                    right: null
+                },
+                right: {
+                    val: 5,
+                    left: null,
+                    right: {
+                        val: 7,
+                        left: null,
+                        right: null
+                    }
+                }
+            };
+            var result = findTilt(tree);
+            console.log(result);
+        </script>
+    </body>
+</html>
