@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Relative Ranks</title>
+    </head>
+    <body>
+        <pre>
+            Given scores of N athletes, find their relative ranks and the people with the top three highest scores, who will be awarded medals: "Gold Medal", "Silver Medal" and "Bronze Medal".
+
+            Example 1:
+            Input: [5, 4, 3, 2, 1]
+            Output: ["Gold Medal", "Silver Medal", "Bronze Medal", "4", "5"]
+            Explanation: The first three athletes got the top three highest scores, so they got "Gold Medal", "Silver Medal" and "Bronze Medal". 
+            For the left two athletes, you just need to output their relative ranks according to their scores.
+            Note:
+            N is a positive integer and won't exceed 10,000.
+            All the scores of athletes are guaranteed to be unique.
+
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums
+            * @return {string[]}
+            */
+            var findRelativeRanks = function(nums) {
+                // the key is to find the original order after sorting
+                // use Dictionary, dic has 3 methods: insert, del, search
+                var dic = {}, i, result = [];
+                for (i = 0; i < nums.length; i++) {
+                    dic[nums[i].toString()] = i;
+                }
+                console.log(dic); // the order would change as if it's index ... although no effect, is there a way to maintain property? no if's obj, obj's order no guarantee
+                // should dictionary's order be guaranteed?
+
+                // after maintaining the mapping, sort the array
+                // use quicksort again
+
+                var p = 0;  // first index of arr, arr[p...r]
+                var r = nums.length - 1;  // last index of arr, arr[p...r]
+                var i;  // the last index of "smaller part"
+                var pivot, j, save, q;
+
+                var quickSort = function(A, p, r) {
+                    if (p < r) {
+                        q = partition(A, p, r);
+                        // smaller part, and bigger part
+                        quickSort(A, p, q - 1);
+                        quickSort(A, q + 1, r);
+                    }
+                }
+                
+                var partition = function(nums, p, r) {
+                    pivot = nums[r];
+                    i = p - 1;
+                    for (j = p; j < r; j++) {
+                        if (nums[j] >= pivot) {
+                            i++;
+                            // if current elem is smaller than pivot, and there are bigger-than-pivot checked elem(s), switch cur with the first bigger-than-pivot-checked elem
+                            // if not, just switch with itself, so no change
+                            save = nums[j];
+                            nums[j] = nums[i];
+                            nums[i] = save;
+                        }
+                    }
+                    // insert as separator
+                    save = nums[r];
+                    nums[r] = nums[i+1];
+                    nums[i+1] = save;
+
+                    return i+1;
+                }
+
+                quickSort(nums, p, r);    // sort in place, quite good , care it's descending now
+                console.log(nums);
+
+                // assign medal now, with dic
+                for (i = 0; i < nums.length; i++) {
+                    if (i === 0) {
+                        result[dic[nums[i]]] = "Gold Medal";
+                    } else if (i === 1) {
+                        result[dic[nums[i]]] = "Silver Medal";
+                    } else if (i === 2) {
+                        result[dic[nums[i]]] = "Bronze Medal";
+                    } else {
+                        // after 3;
+                        result[dic[nums[i]]] = (i + 1).toString();  //MISTAKE: need string
+                    }
+                    
+                }
+                return result;
+
+            };
+
+            var numbers=[3, 2, 4, 5, 1];
+            var result = findRelativeRanks(numbers);
+            console.log(result);
+        </script>
+    </body>
+</html>

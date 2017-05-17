@@ -30,16 +30,17 @@
                 for ( i = 0; i < nums.length; i++) {
                     if (nums[i] !== 0) {
                         save = nums[j];   //MISTAKE #1: nums[j] not necessarily 0, eg: [1]. still need to save
-                        nums[j++] = nums[i];
+                        nums[j++] = nums[i];  // would switch withself if nums[j] is not 0 currently
                         nums[i] = save; 
                     }
                 }
+                console.log(nums);
                 // return nums;   // don't return; in place
 
             };
 
 
-            var nums = [0, 1, 0, 3, 12];
+            var nums = [1, 3, 0, 0, 12];
             var result = moveZeroes(nums);
             console.log(result);
 
