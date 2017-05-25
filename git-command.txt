@@ -6,6 +6,13 @@ git remote add origin https://github.com/moongazers/handlebar.git
 git push -u origin master
 
 ----------------------------
+elegant 4 steps:
+git clone ****
+git add -A
+git commit -m "your message"
+git push
+
+--------------------------
 git pull 
 git push
 
