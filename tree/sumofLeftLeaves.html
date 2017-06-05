@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Sum of Left Leaves</title>
+    </head>
+    <body>
+        <pre>
+            Find the sum of all left leaves in a given binary tree.
+
+            Example:
+
+                3
+               / \
+              9  20
+                /  \
+               15   7
+
+            There are two left leaves in the binary tree, with values 9 and 15 respectively. Return 24.
+
+        </pre>
+        <script>
+            /**
+            * Definition for a binary tree node.
+            * function TreeNode(val) {
+            *     this.val = val;
+            *     this.left = this.right = null;
+            * }
+            */
+            /**
+            * @param {TreeNode} root
+            * @return {number}
+            */
+            var sumOfLeftLeaves = function(root) {
+                //BFS
+                var queue = [];
+                var result = 0, curNode;
+
+                queue.push(root);
+                while (queue.length > 0) {
+                    curNode = queue.shift();
+                    
+                    if (curNode) { //# MISTAKE 1: input can be []
+                        // check sub nodes when checking current node, since if not doing so, cannot find a way to sum the correct left node value
+                        if (curNode.left) {
+                            // when left node
+                            if (!curNode.left.left && !curNode.left.right) {
+                                result += curNode.left.val;
+                            } else {
+                                queue.push(curNode.left);
+                            }
+                            
+                        }
+                        if (curNode.right) {
+                            if (curNode.right.left || curNode.right.right) {
+                                queue.push(curNode.right);
+                            }
+                        }
+                    }
+
+                }
+
+                return result;
+            };
+
+            var tree = {
+                val: 1,
+                left: {
+                    val: 2,
+                    left: {
+                        val: 4,
+                        left: null,
+                        right: null
+                    },
+                    right: {
+                        val: 5,
+                        left: null,
+                        right: null
+                    }
+                },
+                right: {
+                    val: 3,
+                    left: null,
+                    right: null
+                }
+            };
+            var result = sumOfLeftLeaves(tree);
+            console.log(result);
+        </script>
+    </body>
+</html>

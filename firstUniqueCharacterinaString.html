@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>First Unique Character in a String</title>
+    </head>
+    <body>
+        <pre>
+        Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+
+        Examples:
+
+        s = "leetcode"
+        return 0.
+
+        s = "loveleetcode",
+        return 2.
+        Note: You may assume the string contain only lowercase letters.
+        </pre>
+        <script>
+            /**
+            * @param {string} s
+            * @return {number}
+            */
+            var firstUniqChar = function(s) {
+                // since "only lowercase letters", create an array of 26 letters, and count the frequency
+                // return the smallest index of frequency 1 letter
+                var arr = [], i, j, index;
+                for (i = 0; i < 26; i++) {
+                    arr[i] = 0;
+                }
+                console.log(arr);
+
+                //string can still be looped, but not access via str[], which is unsafe and unpredictable
+                for (j = 0; j < s.length; j++) {
+                    index = s.charCodeAt(j) - 'a'.charCodeAt(0);
+                    arr[index]++;
+                }
+                console.log(arr);
+
+                for(i = 0; i < s.length; i++) {
+                    if (arr[s.charCodeAt(i) - 'a'.charCodeAt(0)] === 1) {
+                        return i;
+                    }
+                }
+
+                return -1;  //MISTAKE #1:  don't forget corner case
+                
+            };
+            var s = "loveleetcode";
+            var result = firstUniqChar(s);
+            console.log(result);
+        </script>
+    </body>
+</html>

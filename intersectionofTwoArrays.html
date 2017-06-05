@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Intersection of Two Arrays</title>
+    </head>
+    <body>
+        <pre>
+            Given two arrays, write a function to compute their intersection.
+
+            Example:
+            Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].
+
+            Note:
+            Each element in the result must be unique.
+            The result can be in any order.
+
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums1
+            * @param {number[]} nums2
+            * @return {number[]}
+            */
+            var intersection = function(nums1, nums2) {
+                // each elem is unique, think about two sets.
+                var nums1Set = new Set(nums1);
+                var nums2Set = new Set(nums2);
+                var result = [];
+
+                for (var elem of nums1Set) {
+                    if (nums2Set.has(elem)) {
+                        result.push(elem);
+                    }
+                }
+                return result;
+            };
+
+            var nums1= [2, 7, 11, 15];
+            var nums2 = [7, 7, 15, 3, 3];
+            var result = intersection(nums1, nums2);
+            console.log(result);
+        </script>
+    </body>
+</html>
