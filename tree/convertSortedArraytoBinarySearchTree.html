@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Convert Sorted Array to Binary Search Tree</title>
+    </head>
+    <body>
+        <pre>
+            Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+
+        </pre>
+        <script>
+            /**
+            * Definition for a binary tree node.
+            * function TreeNode(val) {
+            *     this.val = val;
+            *     this.left = this.right = null;
+            * }
+            */
+            /**
+            * @param {number[]} nums
+            * @return {TreeNode}
+            */
+            var sortedArrayToBST = function(nums) {
+                // this is a prototype. The only way to add property/method to prototype is :  TreeNode.prototype.xxx = xxx; This prototype needs to be removed in order to be AC
+                function TreeNode(val) {
+                    this.val = val;
+                    this.left = this.right = null;
+                }
+                // intuitive: since needs balanced,  feel like "binary search", get the root first, and then consider left and right
+
+                var head = constructTree(nums, 0, nums.length - 1);
+
+                function constructTree(nums, lowestIndex, highestIndex) {
+                    var mid, node = null;
+                    //binary search feeling
+                    if (lowestIndex <= highestIndex) {  // equal is right, try cases
+                        mid = parseInt((lowestIndex + highestIndex) / 2);
+                        // get root first
+                        node = new TreeNode(nums[mid]);
+                        // then consider left, right.... pre-order traversal feeling
+                        node.left = constructTree(nums, lowestIndex, mid - 1);
+                        node.right = constructTree(nums, mid + 1, highestIndex);
+                    }
+                    return node;
+                }
+
+                return head;
+
+                // try iterative way later
+
+            };
+
+            var nums = [1,2,3,4]
+            var result = sortedArrayToBST(nums);
+            console.log(result);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Missing Number</title>
+    </head>
+    <body>
+        <pre>
+        Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+
+        For example,
+        Given nums = [0, 1, 3] return 2.
+
+        Note:
+        Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums
+            * @return {number}
+            */
+            var missingNumber = function(nums) {
+                // NICE: XOR
+                // a ^ b ^ b = a;
+                // in this example : 0 ^ 0 ^ 1 ^ 1 ^ 2 ^ 3 ^ 3 ^ 4  ^ X =>  u need to return 2, X = i = 4;
+                var result = 0;
+                for (var i = 0; i < nums.length; i++) {
+                    result = result ^ i ^ nums[i];
+                }
+
+                return result ^ i;
+
+                //ANOTHER way:  SUM;
+                // [0, 1, 3, 4] => if add 1 more digit, what's the right array? => [0, 1, 2, 3, 4] =>  sum([0, 1, 2, 3, 4]) - sum([0, 1, 3, 4])
+
+                // NICE: binary search
+                // nums.sort(function(a, b){  // MISTAKE : compare function
+                //     return a - b;
+                // });
+                // var left = 0, right = nums.length, mid = Math.floor((left + right) / 2);  // can use parseInt()
+                // while (left < right) {
+                //     mid = Math.floor((left + right) / 2);
+                //     if (nums[mid] > mid) {
+                //         right = mid;
+                //     } else {
+                //         left = mid + 1;
+                //     }
+                // }
+                // return left;
+
+            };
+            var result = missingNumber([0, 1, 2, 3, 5, 6]);
+            console.log(result);
+        </script>
+    </body>
+</html>

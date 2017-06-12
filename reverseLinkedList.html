@@ -2,7 +2,19 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <title>Reverse Linked List</title>
+        <style>
+            img {
+                width: 1224px;
+                height: 1632px;
+                display: none;
+            }
+
+            p {
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
         <pre>
@@ -13,7 +25,12 @@
         Hint:
         A linked list can be reversed either iteratively or recursively. Could you implement both?
         </pre>
+        <p>toggle image</p>
+        <img src="resource/reverseSinglyLinkedList.jpg">
         <script>
+            $("p").click(function(){
+                $("img").toggle();
+            });
             /**
             * Definition for singly-linked list.
             * function ListNode(val) {
@@ -26,7 +43,41 @@
             * @return {ListNode}
             */
             var reverseList = function(head) {
-                var node = head;
+                //singly -> only next, no prev
+                // one simple but confusing fact: a = 1, b = 2, c = 3;  a = b, b = c  => a = 2, b= c=3;
+
+                //starting from the head,  head.next needs to be null;
+                //after head done, need to go to the next node (head.next needs to be saved before or it's assigned to null)
+                var save, prevNode = null;
+                var curNode = head;
+
+                while (curNode) {
+                    // save the next node first
+                    save = curNode.next;
+
+                    curNode.next = prevNode;
+
+                    prevNode = curNode;
+
+                    curNode = save;
+                }
+
+                // cannot return curNode, cuz:
+                console.log(curNode);  // => null
+                return prevNode;
+            };
+
+            var a = {value:1, next:{value:2, next:{value:3, next:null}}};
+            var result = reverseList(a);
+            console.log(result);
+        </script>
+    </body>
+</html>
+
+
+
+
+<!--var node = head;
                 var previous = null;
 
                 while(node) {
@@ -39,12 +90,4 @@
                     // increment node to next node or null at end of list
                     node = save;
                 }
-                return previous;   // Change the list head !!!
-            };
-
-            var a = {value:1, next:{value:2, next:{value:3, next:null}}};
-            var result = reverseList(a);
-            console.log(result);
-        </script>
-    </body>
-</html>
+                return previous;   // Change the list head !!!-->
