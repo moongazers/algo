@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <title>Reverse String II</title>
+    </head>
+    <body>
+        <pre>
+        Given a string and an integer k, you need to reverse the first k characters for every 2k characters counting from the start of the string. If there are less than k characters left, reverse all of them. If there are less than 2k but greater than or equal to k characters, then reverse the first k characters and left the other as original.
+        Example:
+        Input: s = "abcdefg", k = 2
+        Output: "bacdfeg"
+        Restrictions:
+        The string consists of lower English letters only.
+        Length of the given string and k will in the range [1, 10000]
+        </pre>
+        
+        <script>
+            /**
+            * @param {string} s
+            * @param {number} k
+            * @return {string}
+            */
+            var reverseStr = function(s, k) {
+                var arr = s.split("");
+                var temp = "";
+                var index = k;
+                for (var i = 0; i < arr.length; i+= 2*k) {
+                    // reverse substr
+                    // need to know if k is bigger than arr.length
+                    if (k > arr.length) {
+                        index = arr.length;
+                    }
+                    for (var j = 0; j < (index-1)/2; j++) {
+                        temp = arr[i+j];
+                        arr[i+j] = arr[i+index-1-j];
+                        arr[i+index-1-j] = temp;
+                    }
+                }
+                return arr.join("");
+                
+                //key is to think about the 3 cases clearly
+            };
+
+            var a1 = "abcde";
+            var a2 = "abcdefghi";
+            var a3 = "ab";
+            var b = 3;
+            var result = reverseStr(a3, b);
+            console.log(result);
+        </script>
+    </body>
+</html>
+
+
+
+
+<!--var node = head;
+                var previous = null;
+
+                while(node) {
+                    // save next or you lose it!!!
+                    var save = node.next;
+                    // reverse pointer
+                    node.next = previous;
+                    // increment previous to current node
+                    previous = node;
+                    // increment node to next node or null at end of list
+                    node = save;
+                }
+                return previous;   // Change the list head !!!-->

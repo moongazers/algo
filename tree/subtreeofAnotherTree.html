@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Subtree of Another Tree</title>
+    </head>
+    <body>
+        <pre>
+            Given two non-empty binary trees s and t, check whether tree t has exactly the same structure and node values with a subtree of s. A subtree of s is a tree consists of a node in s and all of this node's descendants. The tree s could also be considered as a subtree of itself.
+
+            Example 1:
+            Given tree s:
+
+                 3
+                / \
+               4   5
+              / \
+             1   2
+            Given tree t:
+                4 
+               / \
+              1   2
+            Return true, because t has the same structure and node values with a subtree of s.
+            Example 2:
+            Given tree s:
+
+                3
+               / \
+              4   5
+             / \
+            1   2
+                /
+               0
+            Given tree t:
+             4
+            / \
+           1   2
+            Return false.
+
+        </pre>
+        <script>
+            /**
+            * Definition for a binary tree node.
+            * function TreeNode(val) {
+            *     this.val = val;
+            *     this.left = this.right = null;
+            * }
+            */
+            /**
+            * @param {TreeNode} s
+            * @param {TreeNode} t
+            * @return {boolean}
+            */
+            var isSubtree = function(s, t) {
+                var isSame = function isSame(s, t) {
+                    if (s === null && t === null) return true;
+                    if (s === null || t === null) return false;
+
+                    if (s.val !== t.val) return false;
+                    return isSame(s.left, t.left) && isSame(s.right, t.right);
+                };
+
+                //preorder traversal
+                var preOrderTraversal = function preOrderTraversal(s, t) {
+                    //root , left, right
+                    if (s === null) return false;
+                    if (isSame(s, t)) return true;
+                    return preOrderTraversal(s.left, t) || preOrderTraversal(s.right, t)
+                };
+
+                return preOrderTraversal(s,t);
+
+                // can also be done in iterative way: https://discuss.leetcode.com/topic/88508/java-solution-tree-traversal/2
+                // although in book, tree traversal is in recursive; iterative can traverse tree as well
+                // TODO
+                
+            };
+
+            var s = {
+                val: 3,
+                left: {
+                    val: 4,
+                    left: {
+                        val: 1,
+                        left: null,
+                        right: null
+                    },
+                    right: {
+                        val: 2,
+                        left: null,
+                        right: null
+                    }
+                },
+                right: {
+                    val: 5,
+                    left: null,
+                    right: null
+                }
+            };
+
+            var t = {
+                val: 4,
+                left: {
+                    val: 1,
+                    left: null,
+                    right: null
+                },
+                right: {
+                    val: 2,
+                    left: null,
+                    right: null
+                }
+            };
+            var result = isSubtree(s, t);
+            console.log(result);
+        </script>
+    </body>
+</html>

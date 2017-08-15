@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Merge Two Sorted Lists</title>
+    </head>
+    <body>
+        <pre>
+            Merge two sorted linked lists and return it as a new list. 
+            The new list should be made by splicing together the nodes of the first two lists.
+
+        </pre>
+        <script>
+            /**
+            * Definition for singly-linked list.
+            * function ListNode(val) {
+            *     this.val = val;
+            *     this.next = null;
+            * }
+            */
+            /**
+            * @param {ListNode} l1
+            * @param {ListNode} l2
+            * @return {ListNode}
+            */
+            var mergeTwoLists = function(l1, l2) {
+                // l1: 1->3  l2: 2->4  return: 1->2->3->4
+                // first try: merge the two lists , and sort : do-able, but not the problem's nature
+
+                // delicate  recursive:
+                if (!l1) return l2;
+                if (!l2) return l1;
+                
+                if (l1.val < l2.val) {
+                    l1.next = mergeTwoLists(l1.next, l2);
+                    return l1;
+                } else {
+                    l2.next = mergeTwoLists(l2.next, l1);
+                    return l2;
+                }
+
+                // it has the dp feeling: it would deal with small-value node first (but in the deepest recursion), then gradually bigger nodes
+
+            };
+
+
+            var list = {
+                val: 1,
+                next: {
+                    val: 1,
+                    next: {
+                        val: 2,
+                        next: null
+                    }
+                }
+            };
+            var result = deleteDuplicates(list);
+            console.log(result);
+
+        </script>
+    </body>
+</html>

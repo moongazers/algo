@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Remove Duplicates from Sorted List</title>
+    </head>
+    <body>
+        <pre>
+            Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+            For example,
+            Given 1->1->2, return 1->2.
+            Given 1->1->2->3->3, return 1->2->3.
+
+        </pre>
+        <script>
+            /**
+            * Definition for singly-linked list.
+            * function ListNode(val) {
+            *     this.val = val;
+            *     this.next = null;
+            * }
+            */
+            /**
+            * @param {ListNode} head
+            * @return {ListNode}
+            */
+            var deleteDuplicates = function(head) {
+                var node = head;
+                if (!head) return head;
+                while (head.next) {
+                    if (head.next.val === head.val) {
+                        // don't need to check if (head.next.next) since head.next MUST exist here
+                        head.next = head.next.next;
+                    } else {
+                        head = head.next;
+                    }
+            
+                    
+                }
+                return node;
+                // lesson: head=head.next is not a must independen step... in this problem, u can think of
+                // them together and the result is they are in the same conditional statement
+            };
+
+
+            var list = {
+                val: 1,
+                next: {
+                    val: 1,
+                    next: {
+                        val: 2,
+                        next: null
+                    }
+                }
+            };
+            var result = deleteDuplicates(list);
+            console.log(result);
+
+        </script>
+    </body>
+</html>

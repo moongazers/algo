@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Climbing Stairs</title>
+    </head>
+    <body>
+        <pre>
+            You are climbing a stair case. It takes n steps to reach to the top.
+
+            Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+            Note: Given n will be a positive integer.
+
+        </pre>
+        <script>
+            /**
+            * @param {number} n
+            * @return {number}
+            */
+            var climbStairs = function(n) {
+                //eg: 4 steps => 1 1 2, 1 2 1, 2 1 1, 2 2, 1 1 1 1 => result: 5
+                // one can reach step n in two ways:
+                // take a step from n - 1 
+                // take a step of 2 from n - 2
+                // so: r[n] = r[n-1] + r[n-2]
+
+                // no need q here... don't utilize p387 mechanically... it's for max revenue prob
+                var r = [];
+                
+                r[0] = 0;
+                r[1] = 1;
+                r[2] = 2;
+
+                if (n === 0) return r[0];
+                if (n === 1) return r[1];
+                if (n === 2) return r[2];
+
+                for (var i = 3; i <= n; i++) {
+                    r[i] = r[i - 1] + r[i - 2];
+                }
+                
+                // console.log(r);
+                return r[n];
+            };
+
+
+            var num = 4;
+            var result = climbStairs(num);
+            console.log(result);
+
+        </script>
+    </body>
+</html>
