@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <title>Palindrome Linked List</title>
+    </head>
+    <body>
+        <pre>
+        Given a singly linked list, determine if it is a palindrome.
+
+        Follow up:
+        Could you do it in O(n) time and O(1) space?
+
+        https://leetcode.com/problems/palindrome-linked-list/discuss/
+        </pre>
+        <script>
+            /**
+            * Definition for singly-linked list.
+            * function ListNode(val) {
+            *     this.val = val;
+            *     this.next = null;
+            * }
+            */
+            /**
+            * @param {ListNode} head
+            * @return {boolean}
+            */
+            var isPalindrome = function(head) {
+                var reverseList = function(head) {
+                
+                    var save, prevNode = null;
+                    var curNode = head;
+
+                    while (curNode) {
+                        // save the next node first
+                        save = curNode.next;
+
+                        curNode.next = prevNode;
+
+                        prevNode = curNode;
+
+                        curNode = save;
+                    }
+                    return prevNode;
+                };
+                
+                
+                var fast = head, slow = head;
+                while (fast && fast.next) {
+                    fast = fast.next.next;
+                    slow = slow.next;
+                }
+                
+                // odd, make right half smaller
+                if (fast) {
+                    slow = slow.next;
+                }
+                
+                slow = reverseList(slow);
+                fast = head;
+                
+                while (slow) {
+                    if (slow.val !== fast.val) {
+                        return false
+                    }
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return true;
+            };
+
+            var a = {value:1, next:{value:2, next:{value:1, next:null}}};
+            var result = isPalindrome(a);
+            console.log(result);
+        </script>
+    </body>
+</html>

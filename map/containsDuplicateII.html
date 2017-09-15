@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Two Sum</title>
+    </head>
+    <body>
+        <pre>
+            Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+            You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+            Example:
+            Given nums = [2, 7, 11, 15], target = 9,
+
+            Because nums[0] + nums[1] = 2 + 7 = 9,
+            return [0, 1].
+
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums
+            * @param {number} k
+            * @return {boolean}
+            */
+            var containsNearbyDuplicate = function(nums, k) {
+                var map = {};
+                for (var i = 0; i < nums.length; i++) {
+                    if (map[nums[i]] !== undefined) {
+                        if (i - map[nums[i]] <= k) return true;
+                    }
+                    // this step critical: no matter if it's in or not, always need to update (to maintain the smallest distance)
+                    map[nums[i]] = i;
+                    
+                }
+                return false;
+            };
+
+
+
+            var result = containsNearbyDuplicate([1,0,1,1], 1);
+            console.log(result);
+
+        </script>
+    </body>
+</html>

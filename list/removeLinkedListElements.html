@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Remove Linked List Elements</title>
+    </head>
+    <body>
+        <pre>
+            Remove all elements from a linked list of integers that have value val.
+
+            Example
+            Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
+            Return: 1 --> 2 --> 3 --> 4 --> 5
+
+        </pre>
+        <script>
+            /**
+            * Definition for singly-linked list.
+            * function ListNode(val) {
+            *     this.val = val;
+            *     this.next = null;
+            * }
+            */
+            /**
+            * @param {ListNode} head
+            * @param {number} val
+            * @return {ListNode}
+            */
+            var removeElements = function(head, val) {
+                // if use while, too many situations to consider
+                // so damn delicate
+                if (!head) return head;
+                
+                // check the following nodes
+                head.next = removeElements(head.next, val);
+                
+                // check current node
+                return head.val === val? head.next : head;
+            };
+
+
+            var list = {
+                val: 1,
+                next: {
+                    val: 1,
+                    next: {
+                        val: 2,
+                        next: null
+                    }
+                }
+            };
+            var result = removeElements(list, 1);
+            console.log(result);
+
+        </script>
+    </body>
+</html>

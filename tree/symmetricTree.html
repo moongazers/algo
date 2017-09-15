@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Binary Tree Tilt</title>
+    </head>
+    <body>
+        <pre>
+            Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+            For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+                 1
+                / \
+               2   2
+              / \ / \
+             3  4 4  3
+            But the following [1,2,2,null,3,null,3] is not:
+                1
+               / \
+              2   2
+               \   \
+               3    3
+            Note:
+            Bonus points if you could solve it both recursively and iteratively.
+
+        </pre>
+        <script>
+            /**
+            * Definition for a binary tree node.
+            * function TreeNode(val) {
+            *     this.val = val;
+            *     this.left = this.right = null;
+            * }
+            */
+            /**
+            * @param {TreeNode} root
+            * @return {boolean}
+            */
+            var isSymmetric = function(root) {
+                // recursive
+                var isSymmetricHelp = function isSymmetricHelp(left, right) {
+                    if (!left && !right) return true;
+                    if (!left || !right) return false;
+                    // key step
+                    return (left.val === right.val) && isSymmetricHelp(left.left, right.right) && isSymmetricHelp(left.right, right.left);
+                };
+
+                if (root) {
+                    return isSymmetricHelp(root.left, root.right);
+                }
+                return true;  // null root is true
+                    
+            };
+
+            var tree = {
+                val: 3,
+                left: {
+                    val: 2,
+                    left: null,
+                    right: null
+                },
+                right: {
+                    val: 5,
+                    left: null,
+                    right: {
+                        val: 7,
+                        left: null,
+                        right: null
+                    }
+                }
+            };
+            var result = isSymmetric(tree);
+            console.log(result);
+        </script>
+    </body>
+</html>

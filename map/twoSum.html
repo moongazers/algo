@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Two Sum</title>
+    </head>
+    <body>
+        <pre>
+            Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+            You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+            Example:
+            Given nums = [2, 7, 11, 15], target = 9,
+
+            Because nums[0] + nums[1] = 2 + 7 = 9,
+            return [0, 1].
+
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums
+            * @param {number} target
+            * @return {number[]}
+            */
+            var twoSum = function(nums, target) {
+                // use map for space-time tradeoff
+                var map = {}, complement = 0;
+                for (var i = 0; i < nums.length; i++) {
+                    complement = target - nums[i];
+                    if (map[complement] !== undefined) {
+                        return [i, map[complement]];
+                    } 
+                    map[nums[i]] = i;
+                    
+                }
+            };
+
+
+
+            var result = twoSum([2,7,11,15], 9);
+            console.log(result);
+
+        </script>
+    </body>
+</html>

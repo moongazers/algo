@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Linked List Cycle</title>
+    </head>
+    <body>
+        <pre>
+            Given a linked list, determine if it has a cycle in it.
+
+            Follow up:
+            Can you solve it without using extra space?.
+
+        </pre>
+        <script>
+            /**
+            * Definition for singly-linked list.
+            * function ListNode(val) {
+            *     this.val = val;
+            *     this.next = null;
+            * }
+            */
+
+            /**
+            * @param {ListNode} head
+            * @return {boolean}
+            */
+            var hasCycle = function(head) {
+                // cycle in the linkedlist not necessarily point to the head (cannot find definition in book??)
+                // Use two pointers, walker and runner.
+                // walker moves step by step. runner moves two steps at time.
+                // if the Linked List has a cycle walker and runner will meet at some point.
+
+                if (!head) return false;
+                var walker = head;
+                var runner = head;
+                
+                while (runner.next && runner.next.next) {       
+                    walker = walker.next;
+                    runner = runner.next.next;
+                    if (walker === runner) return true;
+                }
+                
+                return false;
+            };
+
+
+            var list = {
+                val: 1,
+                next: {
+                    val: 1,
+                    next: {
+                        val: 2,
+                        next: null
+                    }
+                }
+            };
+            var result = deleteDuplicates(list);
+            console.log(result);
+
+        </script>
+    </body>
+</html>

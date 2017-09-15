@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Maximum Average Subarray I</title>
+    </head>
+    <body>
+        <pre>
+            Given an array consisting of n integers, find the contiguous subarray of given length k that has the maximum average value. And you need to output the maximum average value.
+
+            Example 1:
+            Input: [1,12,-5,-6,50,3], k = 4
+            Output: 12.75
+            Explanation: Maximum average is (12-5-6+50)/4 = 51/4 = 12.75
+            Note:
+            1 <= k <= n <= 30,000.
+            Elements of the given array will be in the range [-10,000, 10,000].
+
+        </pre>
+        <script>
+            /**
+            * @param {number[]} nums
+            * @param {number} k
+            * @return {number}
+            */
+            var findMaxAverage = function(nums, k) {
+                // cumulative sum : O(n), O(n)
+                // var sum = [];
+                // sum[0] = nums[0];
+                // //dp bottom up
+                // for (var i = 1; i < nums.length; i++) {
+                //     sum[i] = sum[i-1] + nums[i];
+                // }
+                // var result = sum[k-1] / k;
+                // for (i = k; i < nums.length; i++) {
+                //     result = Math.max(result, (sum[i] - sum[i-k]) / k);
+                // }
+                // return result;
+
+                //sliding window : O(n), O(1)
+                var sum = 0;
+                for (var i = 0; i < k; i++) {
+                    sum += nums[i];
+                }
+                var result = sum / k;
+                for (i = k; i < nums.length; i++) {
+                    sum += nums[i] - nums[i-k];
+                    result = Math.max(result, sum / k);
+                }
+                return result;
+            };
+
+
+            var arr = [1, 12, -5, -6, 50, 3, -30, 25];
+            var result = findMaxAverage(arr, 4);
+            console.log(result);
+
+        </script>
+    </body>
+</html>

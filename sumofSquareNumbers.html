@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Sum of Square Numbers</title>
+    </head>
+    <body>
+        <pre>
+        Given a non-negative integer c, your task is to decide whether there're two integers a and b such that a2 + b2 = c.
+
+        Example 1:
+        Input: 5
+        Output: True
+        Explanation: 1 * 1 + 2 * 2 = 5
+        Example 2:
+        Input: 3
+        Output: False
+        </pre>
+        <script>
+            /**
+            * @param {number} c
+            * @return {boolean}
+            */
+            var judgeSquareSum = function(c) {
+                // two pointer
+                if (c < 0) return false;
+                var left = 0, right = Math.floor(Math.sqrt(c)), cur;
+                while (left <= right) {
+                    cur = left * left + right * right;
+                    if (cur < c) {
+                        left++;
+                    } else if (cur > c) {
+                        right--;
+                    } else {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            var result = judgeSquareSum(6);
+            console.log(result);
+        </script>
+    </body>
+</html>

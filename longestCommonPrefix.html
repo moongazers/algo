@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Longest Common Prefix</title>
+    </head>
+    <body>
+        <pre>
+            Write a function to find the longest common prefix string amongst an array of strings.
+
+        </pre>
+        <script>
+            /**
+            * @param {string[]} strs
+            * @return {string}
+            */
+            var longestCommonPrefix = function(strs) {
+                // Horizontal scanning
+                if (strs.length === 0) return "";
+                // put the first element as prefix, it would shrink later (thus longest)
+                var prefix = strs[0];
+                
+                for (var i = 1; i < strs.length; i++) {
+                    // if cannot find the prefix in the current str, shrink the prefix
+                    while (strs[i].indexOf(prefix) !== 0) {
+                        prefix = prefix.substring(0, prefix.length-1);
+                        // if shrink to the last, still nothing, return ""
+                        if (prefix.length === 0) return "";
+                    }
+                }
+                return prefix;
+                
+            };
+
+
+            var result = longestCommonPrefix(["leets", "leedd", "leer"]);
+            console.log(result);
+
+        </script>
+    </body>
+</html>
